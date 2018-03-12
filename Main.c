@@ -6,14 +6,11 @@
 #define BUFFER 2048
 
 int main(int argc, char* argv[]){
-  //char c[BUF], d[BUF];
+  char a[BUF], b[BUF];
   
-  //fgets(c, sizeof(c), stdin);
-  //fgets(d, sizeof(d), stdin);
+  fgets(a, sizeof(a), stdin);
+  fgets(b, sizeof(b), stdin);
 
-  char* a = "AACAGTTACC-";
-  char* b = "TAAGGTCA-";
-  
   int larger = strlen(a) > strlen(b) ? strlen(a) : strlen(b);
   
   char *a_ = malloc(sizeof(char) * larger+1);
