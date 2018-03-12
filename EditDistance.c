@@ -18,10 +18,9 @@ void populate_matrix(char* a, char* b, int* matrix){
   for(int i  = a_size-2; i > -1; --i)
     for(int j = b_size-2; j > -1; --j)
       matrix[ind(i,j,b_size)] =
-	min(matrix[ind(i+1, j+1, b_size)] + penalty(a[i],b[j]), matrix[ind(i+1, j, b_size)] + GAP, matrix[ind(i, j+1, b_size)] + GAP);
-  
+	min(matrix[ind(i+1, j+1, b_size)] + penalty(a[i],b[j]),
+	    matrix[ind(i+1, j, b_size)] + GAP, matrix[ind(i, j+1, b_size)] + GAP);
 }
-
 
 int penalty(char a, char b){
   return a == b ? MATCH : MISMATCH;
