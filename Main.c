@@ -15,7 +15,7 @@ int main(int argc, char* argv[]){
   char* a = "AACAGTTACC-";
   char* b = "TAAGGTCA-";
 
-  int* matrix = malloc(sizeof(int) * (strlen(a)) * (strlen(b)));
+  int* matrix = malloc(sizeof(int) * strlen(a) * strlen(b));
   
   populate_matrix(a, b, matrix);
   
