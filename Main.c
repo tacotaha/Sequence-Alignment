@@ -3,8 +3,7 @@
 #include <stdlib.h>
 
 #include "EditDistance.h"
-
-#define BUF 1024
+#define BUFFER 2048
 
 int main(int argc, char* argv[]){
   //char c[BUF], d[BUF];
@@ -12,36 +11,28 @@ int main(int argc, char* argv[]){
   //fgets(c, sizeof(c), stdin);
   //fgets(d, sizeof(d), stdin);
 
-  char* a = "AACAGTTACC";
-  char* b = "TAAGGTCA";
-
-  char *a_ = malloc(sizeof(char) * (strlen(a)+1));
-  char* b_ = malloc(sizeof(char) * (strlen(b)+1));
+  char* a = "AACAGTTACC-";
+  char* b = "TAAGGTCA-";
   
-  memcpy(a_,a,strlen(a));
-  memcpy(b_,b,strlen(b));
-
-  a_[strlen(a)] = '-';
-  a_[strlen(a) + 1] = '\0';
+  int larger = strlen(a) > strlen(b) ? strlen(a) : strlen(b);
   
-  b_[strlen(b)] = '-';
-  b_[strlen(b) + 1] = '\0';
-
-  printf("%ld\n",strlen(a_));
-  printf("%ld\n",strlen(b_));
+  char *a_ = malloc(sizeof(char) * larger+1);
+  char* b_ = malloc(sizeof(char) * larger+1);
   
-  int* matrix = malloc(sizeof(int) * strlen(a_) * strlen(b_));
+  int* matrix = malloc(sizeof(int) * strlen(a) * strlen(b));
   
-  populate_matrix(a_, b_, matrix);
+  populate_matrix(a, b, matrix);
   
-  print_matrix(strlen(a_),strlen(b_),matrix);
-
-  alignment(a_, b_, matrix);
-
+  print_matrix(strlen(a),strlen(b),matrix);
+  
+  alignment(a,b,a_, b_, matrix);
+  
   printf("%s\n",a_);
   printf("%s\n",b_);
-
+  
   free(matrix);
+  free(a_);
+  free(b_);
   
   return 0;
 }
