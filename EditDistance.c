@@ -1,24 +1,25 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "EditDistance.h"
 
 void populate_matrix(char* a, char* b, int* matrix){
   int a_size = strlen(a);
   int b_size = strlen(b);
   
-  matrix[ind(a_size, b_size, b_size+1)] = 0;
-
-  for(int i = a_size - 1; i > -1; --i)
-    matrix[ind(i,b_size,b_size+1)] = matrix[ind(i+1,b_size,b_size+1)] + GAP;
-
-  for(int i = b_size - 1; i > -1; --i)
-    matrix[ind(a_size, i, b_size+1)] = matrix[ind(a_size, i + 1, b_size+1)] + GAP;
-
-  for(int i  = a_size - 1; i > -1; --i)
-    for(int j = b_size - 1; j > -1; --j)
-      matrix[ind(i,j,b_size+1)] =
-	min(matrix[ind(i+1, j+1, b_size+1)] + penalty(a[i],b[j]), matrix[ind(i+1, j, b_size+1)]+GAP, matrix[ind(i, j+1, b_size+1) + GAP]);
-      
+  matrix[ind(a_size-1, b_size-1, b_size)] = 0;
+  
+  for(int i = a_size-2;i > -1;--i)
+    matrix[ind(i,b_size-1,b_size)] = matrix[ind(i+1,b_size-1,b_size)] + GAP;
+  
+  for(int i = b_size-2;i > -1;--i)
+    matrix[ind(a_size-1,i,b_size)] = matrix[ind(a_size-1,i+1,b_size)] + GAP;
+  
+  for(int i  = a_size-2; i > -1; --i)
+    for(int j = b_size-2; j > -1; --j)
+      matrix[ind(i,j,b_size)] =
+	min(matrix[ind(i+1, j+1, b_size)] + penalty(a[i],b[j]), matrix[ind(i+1, j, b_size)] + GAP, matrix[ind(i, j+1, b_size)] + GAP);
+  
 }
 
 
@@ -32,7 +33,7 @@ int min(int a, int b, int c){
 }
 
 int ind(int row, int col, int width){
-  return row* width + col;
+  return row*width + col;
 }
 
 void print_matrix(int n, int m,int* matrix){
