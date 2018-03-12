@@ -5,6 +5,7 @@
 #define  GAP  2
 #define MISMATCH 1
 #define MATCH 0
+#define BUF 1024
 
 /* Return i,j'th element of the matrix*/
 int ind(int row, int col, int width);
@@ -18,7 +19,7 @@ int min(int a, int b, int c);
 void populate_matrix(char* a, char* b, int* matrix);
 
 /*Back-traces the matrix and returns the alignment*/
-int alignment(char* a, char* b);
+void alignment(char* a, char* b, int* matrix);
 
 void print_matrix(int n,int m,int* matrix);
   
