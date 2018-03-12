@@ -19,7 +19,7 @@ int min(int a, int b, int c);
 void populate_matrix(char* a, char* b, int* matrix);
 
 /*Back-traces the matrix and returns the alignment*/
-void alignment(char* a, char* b, int* matrix);
+void alignment(char*,char*,char*,char*,int* matrix);
 
 void print_matrix(int n,int m,int* matrix);
   
