@@ -22,24 +22,21 @@ void populate_matrix(char* a, char* b, int* matrix){
 	    matrix[ind(i+1, j, b_size)] + GAP, matrix[ind(i, j+1, b_size)] + GAP);
 }
 
-void alignment(char* a, char* b, int* matrix){
+void alignment(char* a, char* b, char* a_, char* b_, int* matrix){
   size_t i = 0, j = 0, x = 0, y = 0, ai = 0, bi = 0;
   int m = matrix[ind(i,j,strlen(b))];
-  int larger = strlen(a) > strlen(b) ? strlen(a) : strlen(b);
-
-  char* a_ = malloc(sizeof(char) * larger);
-  char* b_ = malloc(sizeof(char) * larger);
   
-  while(i < strlen(a) - 1 && j < strlen(b) - 1){
+  while(i < strlen(a) - 1&& j < strlen(b) - 1){
     if(m == matrix[ind(x+1,y,strlen(b))] + GAP){
       a_[ai++] = a[i++];
-      b[bi++] = '-';
+      b_[bi++] = '-';
       ++x;
     }else if(m == matrix[ind(x,y+1,strlen(b))] + GAP){
       ++y;
       a_[ai++] = '-';
       b_[bi++] = b[j++];
-    }else if(m == matrix[ind(x+1,y+1,strlen(b))] || m == matrix[ind(x+1, y+1,strlen(b))] + MISMATCH){
+    }else if(m == matrix[ind(x+1,y+1,strlen(b))] ||
+	     m == matrix[ind(x+1, y+1,strlen(b))] + MISMATCH){
       ++x; ++y;
       a_[ai++] = a[i++];
       b_[bi++] = b[j++];
