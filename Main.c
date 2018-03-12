@@ -11,17 +11,38 @@ int main(int argc, char* argv[]){
   
   //fgets(c, sizeof(c), stdin);
   //fgets(d, sizeof(d), stdin);
-  
-  char* a = "AACAGTTACC-";
-  char* b = "TAAGGTCA-";
 
-  int* matrix = malloc(sizeof(int) * strlen(a) * strlen(b));
+  char* a = "AACAGTTACC";
+  char* b = "TAAGGTCA";
+
+  char *a_ = malloc(sizeof(char) * (strlen(a)+1));
+  char* b_ = malloc(sizeof(char) * (strlen(b)+1));
   
-  populate_matrix(a, b, matrix);
+  memcpy(a_,a,strlen(a));
+  memcpy(b_,b,strlen(b));
+
+  a_[strlen(a)] = '-';
+  a_[strlen(a) + 1] = '\0';
   
-  print_matrix(strlen(a),strlen(b),matrix);
+  b_[strlen(b)] = '-';
+  b_[strlen(b) + 1] = '\0';
+
+  printf("%ld\n",strlen(a_));
+  printf("%ld\n",strlen(b_));
   
+  int* matrix = malloc(sizeof(int) * strlen(a_) * strlen(b_));
+  
+  populate_matrix(a_, b_, matrix);
+  
+  print_matrix(strlen(a_),strlen(b_),matrix);
+
+  alignment(a_, b_, matrix);
+
+  printf("%s\n",a_);
+  printf("%s\n",b_);
+
   free(matrix);
   
   return 0;
 }
+
