@@ -30,7 +30,7 @@ void alignment(char* a, char* b,char* a_, char* b_, int* matrix){
   size_t i = 0, j = 0, x = 0, y = 0, ai = 0, bi = 0;
   int m = matrix[ind(i,j,strlen(b))];
   
-  while(i < a_size && j < b_size){
+  while(i < a_size - 1 && j < b_size - 1){
     if(m == matrix[ind(x+1,y,strlen(b))] + GAP){
       a_[ai++] = a[i++];
       b_[bi++] = '-';
