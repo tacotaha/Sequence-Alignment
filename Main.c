@@ -2,17 +2,17 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
-#include "EditDistance.h"
+#include "Alignment.h"
 
 /*Change this value to be roughly proprtional 
   to the square root of the amount of available
-  Mem. (in bytes)...*/
+  Memory (in bytes)...*/
 #define BUFFER 100000
 
 int main(int argc, char** argv){
   char a[BUFFER], b[BUFFER], a_[BUFFER+1], b_[BUFFER+1],c;
   int z = 0;
-
+  
   const int verbose = argc > 1 && strcmp(argv[1],"-v") == 0 ? 1 : 0;
   
   clock_t start, end;
