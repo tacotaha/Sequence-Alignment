@@ -1,36 +1,58 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "EditDistance.h"
 #define BUFFER 2048
 
 int main(int argc, char* argv[]){
-  char a[BUF], b[BUF];
+  char a[BUFFER], b[BUFFER], a_[BUFFER+1], b_[BUFFER+1],c;
+  int z = 0;
   
-  fgets(a, sizeof(a), stdin);
-  fgets(b, sizeof(b), stdin);
-
-  int larger = strlen(a) > strlen(b) ? strlen(a) : strlen(b);
+  clock_t start, end;
+  double elapsed_time;
   
-  char *a_ = malloc(sizeof(char) * larger+1);
-  char* b_ = malloc(sizeof(char) * larger+1);
+  while((c = getchar()))
+    if(c == 0xa || z == BUFFER - 1){
+      a[z++] = '-';
+      a[z] = 0x0;
+      break;
+    }else a[z++] = c;
   
-  int* matrix = malloc(sizeof(int) * strlen(a) * strlen(b));
+  size_t a_len = z; z = 0;
   
-  populate_matrix(a, b, matrix);
+  while((c = getchar()))
+    if(c == 0xa || z == BUFFER - 1){
+      b[z++] = '-';
+      b[z] = 0x0;
+      break;
+    }else b[z++] = c;
   
-  print_matrix(strlen(a),strlen(b),matrix);
+  fseek(stdout,0,SEEK_END);
   
-  alignment(a,b,a_, b_, matrix);
+  size_t b_len = z;
   
-  printf("%s\n",a_);
-  printf("%s\n",b_);
+  int* matrix = malloc(sizeof(int) * a_len * b_len);
+  
+  start = clock();
+  
+  populate_matrix(a,b,matrix);
+  
+  printf("Calculating Alignment...\n");
+  //print_matrix(a_len,b_len,matrix);
+  
+  alignment(a,b,a_,b_,matrix);
+  
+  print_alignment(a_,b_);
+  
+  end = clock();
+  elapsed_time = ((double) (end - start)) / CLOCKS_PER_SEC;
+  
+  printf("Elapsed Time: %fms\n",elapsed_time);
+  printf("Edit Distance between strings: %d\n",edit_distance(matrix));
   
   free(matrix);
-  free(a_);
-  free(b_);
   
   return 0;
 }
-
