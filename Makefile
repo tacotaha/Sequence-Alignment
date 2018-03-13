@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -Werror -pedantic
+CFLAGS=-Wall -Werror -pedantic -O3
 
 align: edit_distance.o main.o
 	$(CC) edit_distance.o main.o -o align
