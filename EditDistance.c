@@ -4,8 +4,9 @@
 #include "EditDistance.h"
 
 void populate_matrix(char* a, char* b, int* matrix){
-  int a_size = strlen(a);
-  int b_size = strlen(b);
+  if(!a || !b) return;
+  
+  size_t a_size = strlen(a), b_size = strlen(b);
   
   matrix[ind(a_size-1, b_size-1, b_size)] = 0;
   
@@ -18,31 +19,36 @@ void populate_matrix(char* a, char* b, int* matrix){
   for(int i  = a_size-2; i > -1; --i)
     for(int j = b_size-2; j > -1; --j)
       matrix[ind(i,j,b_size)] =
-	min(matrix[ind(i+1, j+1, b_size)] + penalty(a[i],b[j]),
+	min(matrix[ind(i+1,j+1,b_size)] + penalty(a[i],b[j]),
 	    matrix[ind(i+1, j, b_size)] + GAP, matrix[ind(i, j+1, b_size)] + GAP);
 }
 
-void alignment(char* a, char* b, char* a_, char* b_, int* matrix){
+void alignment(char* a, char* b,char* a_, char* b_, int* matrix){
+  if(!a || !b || !a_ || !b_ || !matrix) return;
+  
+  size_t a_size = strlen(a), b_size = strlen(b);
   size_t i = 0, j = 0, x = 0, y = 0, ai = 0, bi = 0;
   int m = matrix[ind(i,j,strlen(b))];
   
-  while(i < strlen(a) - 1&& j < strlen(b) - 1){
+  while(i < a_size && j < b_size){
     if(m == matrix[ind(x+1,y,strlen(b))] + GAP){
       a_[ai++] = a[i++];
       b_[bi++] = '-';
       ++x;
-    }else if(m == matrix[ind(x,y+1,strlen(b))] + GAP){
+    }else if(m == matrix[ind(x,y+1,b_size)] + GAP){
       ++y;
       a_[ai++] = '-';
       b_[bi++] = b[j++];
-    }else if(m == matrix[ind(x+1,y+1,strlen(b))] ||
-	     m == matrix[ind(x+1, y+1,strlen(b))] + MISMATCH){
+    }else if(m == matrix[ind(x+1,y+1,b_size)] ||
+	     m == matrix[ind(x+1, y+1,b_size)] + MISMATCH){
       ++x; ++y;
       a_[ai++] = a[i++];
       b_[bi++] = b[j++];
     }
-    m = matrix[ind(x,y,strlen(b))];
+    m = matrix[ind(x,y,b_size)];
   }
+  
+  a_[ai] = b_[bi] = 0x0;
 }
 
 int penalty(char a, char b){
@@ -58,10 +64,21 @@ int ind(int row, int col, int width){
   return row*width + col;
 }
 
-void print_matrix(int n, int m,int* matrix){
-  for(int i = 0; i < n; ++i){
-    for(int j = 0; j < m; ++j)
-      printf("%d\t", matrix[ind(i,j,m)]);
-    printf("\n");
-  }
+void print_matrix(int n,int m,int* matrix){
+  if(matrix)
+    for(int i = 0; i < n; ++i){
+      for(int j = 0; j < m; ++j)
+	printf("%d\t", matrix[ind(i,j,m)]);
+      printf("\n");
+    }
+}
+
+void print_alignment(char* a, char* b){
+  if(a && b)
+    for(size_t i = 0; i < strlen(a) - 1; ++i)
+      printf("%c %c\n", a[i],b[i]);
+}
+
+int edit_distance(int* matrix){
+  return matrix != NULL ? matrix[0] : 0;
 }
