@@ -4,7 +4,7 @@
 #include <time.h>
 
 #include "EditDistance.h"
-#define BUFFER 2048
+#define BUFFER 100000
 
 int main(int argc, char* argv[]){
   char a[BUFFER], b[BUFFER], a_[BUFFER+1], b_[BUFFER+1],c;
@@ -23,7 +23,7 @@ int main(int argc, char* argv[]){
   size_t a_len = z; z = 0;
   
   while((c = getchar()))
-    if(c == 0xa || z == BUFFER - 1){
+    if(c == EOF || c == 0xa || z == BUFFER - 1){
       b[z++] = '-';
       b[z] = 0x0;
       break;
