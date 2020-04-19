@@ -5,7 +5,7 @@ A fast &amp; cache-friendly implementation of the Needleman–Wunsch algorithm f
 Use the GNU Make utility along with the Makefile in the root directory. This builds an executable by the name of ```align```
 
 ```
-git clone https://github.com/tazzaoui/Sequence-Alignment.git && cd Sequence-Alignment && make
+git clone https://github.com/tacotaha/Sequence-Alignment.git && cd Sequence-Alignment && make
 ```
 
 ## To Run:
